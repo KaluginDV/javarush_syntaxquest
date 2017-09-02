@@ -12,15 +12,24 @@ public class Solution {
 
         String sourceFileName = reader.readLine();
         String destinationFileName = reader.readLine();
-
-        InputStream fileInputStream = getInputStream(sourceFileName);
-        OutputStream fileOutputStream = getOutputStream(destinationFileName);
+        InputStream fileInputStream;
+        OutputStream fileOutputStream;
+        try {
+            fileInputStream = getInputStream(sourceFileName);
+            fileOutputStream = getOutputStream(destinationFileName);
+        }
+        catch (FileNotFoundException err){
+            System.out.println("Файл не существует.");
+            sourceFileName = reader.readLine();
+            destinationFileName = reader.readLine();
+            fileInputStream = getInputStream(sourceFileName);
+            fileOutputStream = getOutputStream(destinationFileName);
+            }
 
         while (fileInputStream.available() > 0) {
             int data = fileInputStream.read();
             fileOutputStream.write(data);
         }
-
         fileInputStream.close();
         fileOutputStream.close();
     }
