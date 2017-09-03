@@ -3,6 +3,8 @@ package com.javarush.task.task09.task0930;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /* 
 Задача по алгоритмам
@@ -28,6 +30,28 @@ public class Solution {
 
     public static void sort(String[] array) {
         //напишите тут ваш код
+        Map<Integer, String> words = new HashMap();
+        Map<Integer, String> nums = new HashMap();
+        for(int i = 0; i < array.length; i++){
+            if(isNumber(array[i])) {
+                nums.put(i, array[i]);
+            }
+            else {
+                words.put(i,array[i]);
+            }
+        }
+        for(int i = words.size()-1; i > 0; i--){                    // Внешний цикл (обратный)
+            for(int j = 0; j < i; j++){                             // Внутренний цикл (прямой)
+                if(isGreaterThan(words.get(j),words.get(j+1))){     // Порядок нарушен?
+                    String temp = words.get(j);                     // Поменять местами
+                    words.put(j,words.get(j+1));
+                    words.put(j+1,temp);
+                }
+            }
+        }
+        for (Map.Entry entry : words.entrySet()) {
+            array[(int)entry.getKey()] = (String) entry.getValue();
+        }
     }
 
     // Метод для сравнения строк: 'а' больше чем 'b'
