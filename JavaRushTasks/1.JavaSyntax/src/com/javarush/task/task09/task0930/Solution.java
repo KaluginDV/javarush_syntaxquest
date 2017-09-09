@@ -40,16 +40,55 @@ public class Solution {
                 words.put(i,array[i]);
             }
         }
-        for(int i = words.size()-1; i > 0; i--){                    // Внешний цикл (обратный)
+
+        String[] arrayWord = new String[words.size()];
+        int s = 0;
+        for (Map.Entry entry : words.entrySet()) {
+            arrayWord[s] = (String) entry.getValue();
+            s++;
+        }
+        for(int i = arrayWord.length-1; i > 0; i--){                    // Внешний цикл (обратный)
             for(int j = 0; j < i; j++){                             // Внутренний цикл (прямой)
-                if(isGreaterThan(words.get(j),words.get(j+1))){     // Порядок нарушен?
-                    String temp = words.get(j);                     // Поменять местами
-                    words.put(j,words.get(j+1));
-                    words.put(j+1,temp);
+                if(isGreaterThan(arrayWord[j],arrayWord[j+1])){     // Порядок нарушен?
+                    String temp = arrayWord[j];                     // Поменять местами
+                    arrayWord[j] = arrayWord[j+1];
+                    arrayWord[j+1] = temp;
                 }
             }
         }
+        s = 0;
         for (Map.Entry entry : words.entrySet()) {
+            words.put((int)entry.getKey(),arrayWord[s]);
+            s++;
+        }
+
+        int[] arrayNum = new int[nums.size()];
+        s = 0;
+        for (Map.Entry entry : nums.entrySet()) {
+            arrayNum[s] = Integer.parseInt((String) entry.getValue());
+            s++;
+        }
+        for (int i = 0; i < arrayNum.length; i++)
+        {
+            for (int j = 0; j < arrayNum.length; j++)
+            {
+                if (arrayNum[i] >= arrayNum[j]){
+                    int temp = arrayNum[i];
+                    arrayNum[i] = arrayNum[j];
+                    arrayNum[j] = temp;
+                }
+            }
+        }
+        s = 0;
+        for (Map.Entry entry : nums.entrySet()) {
+            nums.put((int)entry.getKey(),""+arrayNum[s]);
+            s++;
+        }
+
+        for (Map.Entry entry : words.entrySet()) {
+            array[(int)entry.getKey()] = (String) entry.getValue();
+        }
+        for (Map.Entry entry : nums.entrySet()) {
             array[(int)entry.getKey()] = (String) entry.getValue();
         }
     }
